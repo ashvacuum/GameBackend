@@ -107,8 +107,9 @@ exports.login = async (req, res) => {
 
 exports.updateScore = async (req, res) => {
     try {
-        const id = req.params.id
         const { score } = req.body;
+        const id = req.player._id;
+        
         const player = await Player.findById(id);
         if(!player){
             return res.status(404).json({
@@ -129,10 +130,13 @@ exports.updateScore = async (req, res) => {
     } catch(error){
         res.status(500).json({
             success: false,
+            message: 'Failed to Update Score',
             error: error.message
         })
     }
 };
+
+
 
 exports.deletePlayer = async (req, res) => {
     try {
